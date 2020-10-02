@@ -10,6 +10,7 @@
     "@koa/router": "^9.4.0",
     "axios": "^0.20.0",
     "colors": "^1.4.0",
+    "cz-conventional-changelog": "^3.3.0",
     "dotenv": "^8.2.0",
     "dotenv-expand": "^5.1.0",
     "koa": "^2.13.0",
@@ -28,8 +29,7 @@
     "@babel/preset-env": "^7.6.0",
     "@babel/register": "^7.6.0",
     "@babel/runtime": "^7.6.0",
-    "nodemon": "^2.0.4",
-    "cz-conventional-changelog": "https://github.com/MoeLoli/cz-conventional-changelog.git"
+    "nodemon": "^2.0.4"
   },
   "_moduleAliases": {
     "@": "src/",

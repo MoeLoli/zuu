@@ -1,6 +1,6 @@
 {
   "name": "zuu",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
@@ -16,6 +16,7 @@
     "koa-body": "^4.2.0",
     "koa-json": "^2.0.2",
     "module-alias": "^2.2.2",
+    "node-schedule": "^1.3.2",
     "telegraf": "^3.38.0"
   },
   "devDependencies": {
@@ -27,10 +28,16 @@
     "@babel/preset-env": "^7.6.0",
     "@babel/register": "^7.6.0",
     "@babel/runtime": "^7.6.0",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "cz-conventional-changelog": "https://github.com/MoeLoli/cz-conventional-changelog.git"
   },
   "_moduleAliases": {
     "@": "src/",
     "$data": "data/"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

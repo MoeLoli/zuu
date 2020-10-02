@@ -2,7 +2,7 @@
  * @Author: Jin
  * @Date: 2020-09-24 09:16:43
  * @LastEditors: Jin
- * @LastEditTime: 2020-10-02 10:34:41
+ * @LastEditTime: 2020-10-02 18:11:45
  * @FilePath: /zuu/src/loaders/koa2.js
  */
 import fs from 'fs';
@@ -12,7 +12,6 @@ import json from 'koa-json';
 import koaBody from 'koa-body';
 
 import logger from './logger';
-import emitter from './emitter';
 
 import constants from '@/decorators/constants';
 import { HttpError } from '@/decorators/customError';

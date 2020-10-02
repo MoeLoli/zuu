@@ -2,12 +2,14 @@
  * @Author: Jin
  * @Date: 2020-09-24 23:34:00
  * @LastEditors: Jin
- * @LastEditTime: 2020-09-29 15:57:34
- * @FilePath: /Server/src/loaders/router.js
+ * @LastEditTime: 2020-10-03 00:20:09
+ * @FilePath: /zuu/src/loaders/router.js
  */
 import KoaRouter from '@koa/router';
 
-export const routes = global.routes = [];
+import { zuu } from './global';
+
+export const routes = zuu.routes = zuu.routes ? zuu.routes : [];
 
 export const RequestMethod = [
     'get',

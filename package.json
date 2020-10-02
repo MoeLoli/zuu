@@ -1,0 +1,36 @@
+{
+  "name": "zuu",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "serve": "nodemon"
+  },
+  "dependencies": {
+    "@koa/router": "^9.4.0",
+    "axios": "^0.20.0",
+    "colors": "^1.4.0",
+    "dotenv": "^8.2.0",
+    "dotenv-expand": "^5.1.0",
+    "koa": "^2.13.0",
+    "koa-body": "^4.2.0",
+    "koa-json": "^2.0.2",
+    "module-alias": "^2.2.2",
+    "telegraf": "^3.38.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/plugin-external-helpers": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/register": "^7.6.0",
+    "@babel/runtime": "^7.6.0",
+    "nodemon": "^2.0.4"
+  },
+  "_moduleAliases": {
+    "@": "src/",
+    "$data": "data/"
+  }
+}

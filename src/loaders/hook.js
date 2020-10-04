@@ -2,13 +2,12 @@
  * @Author: Jin
  * @Date: 2020-09-24 13:28:12
  * @LastEditors: Jin
- * @LastEditTime: 2020-10-03 00:17:51
+ * @LastEditTime: 2020-10-03 10:48:23
  * @FilePath: /zuu/src/loaders/hook.js
  */
-import { zuu } from './global';
+import { zuu } from '@/global';
 
-let hook = zuu.hook ? zuu.hook : {};
-zuu.hook = hook;
+let hook = zuu.hook = zuu.hook ? zuu.hook : {};
 
 export const register = (hookname, param = null) => {
     let config = {};
@@ -35,7 +34,7 @@ export const register = (hookname, param = null) => {
         return false;
     }
 
-    hook[hookname].push(config)
+    hook[hookname].push(config);
 
     return hook[hookname];
 }

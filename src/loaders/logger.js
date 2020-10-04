@@ -1,16 +1,9 @@
 /*
  * @Author: Jin
- * @Date: 2020-09-24 09:48:47
+ * @Date: 2020-10-02 10:52:16
  * @LastEditors: Jin
- * @LastEditTime: 2020-09-30 16:09:44
- * @FilePath: /Server/src/loaders/logger.js
- */
-/*
- * @Author: Jin
- * @Date: 2020-09-24 09:48:47
- * @LastEditors: Jin
- * @LastEditTime: 2020-09-24 13:37:09
- * @FilePath: /Server/src/loaders/logger.js
+ * @LastEditTime: 2020-10-03 09:15:02
+ * @FilePath: /zuu/src/loaders/logger.js
  */
 import 'colors';
 import fs from 'fs';

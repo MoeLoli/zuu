@@ -2,25 +2,29 @@
  * @Author: Jin
  * @Date: 2020-09-26 22:36:56
  * @LastEditors: Jin
- * @LastEditTime: 2020-09-27 19:08:18
- * @FilePath: /Server/src/loaders/telegram.js
+ * @LastEditTime: 2020-10-03 21:39:46
+ * @FilePath: /zuu/src/loaders/telegram.js
  */
 import { Telegraf } from 'telegraf';
-import HttpsProxyAgent from 'https-proxy-agent';
 
 import config from '@/config';
-import emitter from './emitter';
+import { trigger } from './hook';
 
-const bot = new Telegraf(config.telegram.token, {
-    telegram: {
-        agent: new HttpsProxyAgent('http://127.0.0.1:1087')
-    }
-});
-
-emitter.addListener("pluginLoaded", () => {
+/*emitter.addListener("pluginLoaded", () => {
     bot.launch();
-});
+});*/
 
-export default ({ method = 'command', content = 'start', middleware = ((ctx, next) => { }) }) => {
-    bot[method](content, middleware);
+export default () => {
+    if (!config?.telegram?.token) return ;
+    const bot = new Telegraf(config.telegram.token);
+
+    const genBotConfig = (obj) => {
+        if (obj?.method || obj?.content || obj?.middleware) return;
+
+        bot[obj.method](obj.content, obj.middleware);
+    }
+
+    trigger('REGISTER_ROUTE_1', [ genBotConfig ]);
+    
+    bot.launch();
 }

@@ -2,12 +2,12 @@
  * @Author: Jin
  * @Date: 2020-09-24 23:34:00
  * @LastEditors: Jin
- * @LastEditTime: 2020-10-03 00:20:09
+ * @LastEditTime: 2020-10-03 09:29:45
  * @FilePath: /zuu/src/loaders/router.js
  */
 import KoaRouter from '@koa/router';
 
-import { zuu } from './global';
+import { zuu } from '@/global';
 
 export const routes = zuu.routes = zuu.routes ? zuu.routes : [];
 
@@ -29,7 +29,6 @@ export default ({ name = '', url = '', method = 'get', callback = ((ctx, next) =
     } else {
         router[method](url, callback);
     }
-    // documentation
     const item = {
         name: name,
         url: url,

@@ -2,40 +2,44 @@
  * @Author: Jin
  * @Date: 2020-09-24 08:29:59
  * @LastEditors: Jin
- * @LastEditTime: 2020-09-29 16:00:11
- * @FilePath: /Server/src/api/routes/index.js
+ * @LastEditTime: 2020-10-20 13:03:01
+ * @FilePath: /zuu/src/api/routes/index.js
  */
-import Router from '@koa/router';
+import Router from "@koa/router";
 
-import { getCPUUsage, parsePrefix } from '@/utils';
+import { trigger } from "@/loaders/hook";
+import { getCPUUsage, parsePrefix } from "@/utils";
 
-const statisticsData = require('$data/statistics.json');
 const router = new Router({
-    prefix: parsePrefix(__filename) === '/' ? undefined : parsePrefix(__filename)
+    prefix:
+        parsePrefix(__filename) === "/" ? undefined : parsePrefix(__filename),
 });
-const loadAPIList = () => {
-    let routes = global.routes;
 
-    let ret = {};
-    for (const key in routes) {
-        const url = (routes[key].url).split('/').filter(e => e != '');
-        ret[`${(routes[key].name).toLocaleLowerCase()}_url`] = `/${url[0]}`;
-    }
-    
-    return ret;
-}
+router.get("/System", async (ctx, next) => {
+    let temp;
 
-router.get('/System', async (ctx, next) => {
-    ctx.status = 200;
-    ctx.body = {
+    let retStatus = 200;
+    let retBody = {
         uptime: process.uptime(),
         usage: {
-            memory: (process.memoryUsage().rss / 1024 / 1024).toFixed(2) + 'MB',
-            cpu: await getCPUUsage() + '%'
+            memory: (process.memoryUsage().rss / 1024 / 1024).toFixed(2) + "MB",
+            cpu: (await getCPUUsage()) + "%",
         },
-        api: loadAPIList(),
-        statistics: statisticsData
+    };
+
+    temp = trigger("ROUTER_SYSTEM_1", [retStatus, retBody]);
+    if (typeof temp === "object" && Object.keys(temp).length > 0) {
+        if (temp.retStatus) {
+            retStatus = temp.retStatus;
+        }
+
+        if (temp.retBody) {
+            retBody = temp.retBody;
+        }
     }
+
+    ctx.status = retStatus;
+    ctx.body = retBody;
 });
 
 module.exports = router;

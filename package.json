@@ -12,6 +12,7 @@
     "colors": "^1.4.0",
     "dotenv": "^8.2.0",
     "dotenv-expand": "^5.1.0",
+    "https-proxy-agent": "^5.0.0",
     "koa": "^2.13.0",
     "koa-body": "^4.2.0",
     "koa-json": "^2.0.2",
@@ -28,8 +29,8 @@
     "@babel/preset-env": "^7.6.0",
     "@babel/register": "^7.6.0",
     "@babel/runtime": "^7.6.0",
-    "nodemon": "^2.0.4",
-    "cz-conventional-changelog": "https://github.com/MoeLoli/cz-conventional-changelog.git"
+    "cz-conventional-changelog": "https://github.com/MoeLoli/cz-conventional-changelog.git",
+    "nodemon": "^2.0.4"
   },
   "_moduleAliases": {
     "@": "src/",

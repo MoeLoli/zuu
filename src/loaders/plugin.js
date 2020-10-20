@@ -2,7 +2,7 @@
  * @Author: Jin
  * @Date: 2020-09-24 14:13:23
  * @LastEditors: Jin
- * @LastEditTime: 2020-10-03 21:31:48
+ * @LastEditTime: 2020-10-10 09:11:49
  * @FilePath: /zuu/src/loaders/plugin.js
  */
 import fs from 'fs';
@@ -10,7 +10,6 @@ import util from 'util';
 import path from 'path';
 
 import logger from './logger';
-import router from './router';
 import * as hook from './hook';
 
 const getRouteName = (url) => {

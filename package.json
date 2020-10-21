@@ -33,8 +33,7 @@
     "nodemon": "^2.0.4"
   },
   "_moduleAliases": {
-    "@": "src/",
-    "$data": "data/"
+    "@": "src/"
   },
   "config": {
     "commitizen": {

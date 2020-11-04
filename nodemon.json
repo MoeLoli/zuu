@@ -5,7 +5,7 @@
     ],
     "ignore": [
         ".git",
-        "data",
+        ".json",
         "node_modules/**/node_modules"
     ],
     "ext": "js, ts, json",

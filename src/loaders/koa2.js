@@ -2,7 +2,7 @@
  * @Author: Jin
  * @Date: 2020-09-24 09:16:43
  * @LastEditors: Jin
- * @LastEditTime: 2020-10-10 09:21:44
+ * @LastEditTime: 2020-11-04 19:02:47
  * @FilePath: /zuu/src/loaders/koa2.js
  */
 import fs from 'fs';
@@ -55,7 +55,6 @@ export default async ({ app }) => {
     app.use(middlewares.onError);
     app.use(middlewares.header);
     app.use(middlewares.accessControl);
-    app.use(middlewares.statistics);
 
     trigger('REGISTER_MIDDLEWARE_2', [ loadMiddleware ]);
 
@@ -77,18 +76,18 @@ export default async ({ app }) => {
 
     const regRouter = (method, ...args) => {
         if (!method || args.length === 0) return
-        
+
         routeNum++;
         const router = new KoaRouter();
         router[method].apply(router, args);
         app.use(router.routes()).use(router.allowedMethods());
-        
+
         routeList.push({
             name: ((args[0].split('/').filter(e => e != ''))[0]).toLocaleLowerCase(),
             args
         })
     }
-    
+
     trigger('REGISTER_ROUTE_1', [ regRouter ]);
 
     trigger('REGISTER_MIDDLEWARE_4', [ loadMiddleware ]);
@@ -100,7 +99,7 @@ export default async ({ app }) => {
         const groupPathArr = (value.substr(value.indexOf('api/routes') + 'api/routes'.length + 1, value.length)).split('/');
         groupPathArr.pop();
         const group = groupPathArr.join(' - ');
-        
+
         return {
             name: name.toLocaleUpperCase(),
             group: group.toLocaleUpperCase(),
@@ -108,7 +107,6 @@ export default async ({ app }) => {
         };
     });
     routes = routes.filter(value => fs.existsSync(value.path));
-    
     routes.forEach((value, index, array) => {
         array[index].object = require(value.path);
         app.use((array[index].object).routes(), (array[index].object).allowedMethods());

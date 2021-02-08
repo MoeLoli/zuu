@@ -2,53 +2,99 @@
  * @Author: Jin
  * @Date: 2020-09-24 14:13:23
  * @LastEditors: Jin
- * @LastEditTime: 2020-11-04 19:18:20
- * @FilePath: /zuu/src/loaders/plugin.js
+ * @LastEditTime: 2021-02-07 23:02:42
+ * @FilePath: /api/src/loaders/plugin.js
  */
 import fs from "fs";
 import util from "util";
 import path from "path";
+import spawn from 'cross-spawn';
 
-import logger from "./logger";
-import * as hook from "./hook";
+import axios from "../utils/axios";
+import logger from "../utils/logger";
+import * as hook from "../utils/hook";
 
-export default async ({ app }) => {
+export const execCommand = async (cmd, modules, where, proxy, env) => {
+    const registry = '';
+    return await new Promise((resolve) => {
+        let args = [cmd].concat(modules).concat('--save');
+        if (registry) {
+            args = args.concat(`--registry=${registry}`);
+        }
+        if (proxy) {
+            args = args.concat(`--proxy=${proxy}`);
+        }
+        try {
+            const npm = spawn('npm', args, { cwd: where, env: Object.assign({}, process.env, env) });
+
+            let output = '';
+            npm.stdout.on('data', (data) => {
+                output += data;
+            }).pipe(process.stdout);
+
+            npm.stderr.on('data', (data) => {
+                output += data;
+            }).pipe(process.stderr);
+
+            npm.on('close', (code) => {
+                if (!code) {
+                    resolve({ code: 0, data: output });
+                } else {
+                    resolve({ code: code, data: output });
+                }
+            });
+            // for users who haven't installed node.js
+            npm.on('error', (err) => {
+                console.error(err);
+                console.error('NPM is not installed');
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    })
+}
+
+export const pluginLoader = async ({ app }) => {
     let plugins = fs.readdirSync(path.join(__dirname, "../plugins"));
-    plugins = plugins.filter((value) => value != ".gitkeep");
+    plugins = plugins.filter(
+        (value) => value != ".gitkeep" && value != ".DS_Store"
+    );
     plugins = plugins.map((value) => {
         return {
             pcn: value.toLocaleUpperCase(),
+            enabled: true,
+            config: fs.existsSync(path.join(__dirname, "../plugins/") + value + "/plugin.json")
+                ? require(path.join(__dirname, "../plugins/") +
+                    value +
+                    "/plugin.json")
+                : {},
             path: path.join(__dirname, "../plugins/") + value + "/plugin.js",
         };
     });
     plugins = plugins.filter((value) => fs.existsSync(value.path));
-
+    plugins = plugins.sort((a, b) => a.config.priority - b.config.priority);
     plugins.forEach((value, index, array) => {
+        // const deps = Object.keys(value.config.dependencies || {})
+        // const devDeps = Object.keys(value.config.devDependencies || {})
+        // const modules = deps.concat(devDeps);
         array[index].object = new (require(value.path).default)();
     }, this);
 
     let pluginNum = plugins.length;
-
-    plugins.forEach((value, index, array) => {
-        const pluginEnv = { hook, logger };
+    plugins.filter((value) => value.enabled === true).forEach((value, index, array) => {
+        const pluginEnv = { hook, logger, axios };
         Object.assign(value.object, pluginEnv);
 
-
-        if (typeof value.object.install !== "undefined") {
-            value.object.install.apply(value.object, []);
+        if (typeof value.object.initialize === "function") {
+            value.object.initialize.apply(value.object, []);
         }
 
-        if (typeof value.object.uninstall !== "undefined") {
-            value.object.uninstall.apply(value.object, []);
+        if (typeof value.object.activate !== "function") {
+            logger.error(`Plugin [${value.pcn}] could not be loaded`, "PLUGIN");
+            pluginNum--;
+            return;
         }
-
-        if (typeof value.object.activate !== "undefined") {
-            value.object.activate.apply(value.object, []);
-        }
-
-        if (typeof value.object.deactivate !== "undefined") {
-            value.object.deactivate.apply(value.object, []);
-        }
+        value.object.activate.apply(value.object, []);
 
         logger.success(`Plugin [${value.pcn}] has been loaded`, "PLUGIN");
     }, this);
@@ -61,3 +107,6 @@ export default async ({ app }) => {
         "SYSTEM"
     );
 };
+
+
+export default pluginLoader;

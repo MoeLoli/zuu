@@ -5,10 +5,10 @@
  * @LastEditTime: 2020-09-24 19:09:39
  * @FilePath: /Server/src/api/middlewares/onError.js
  */
-import logger from '@/loaders/logger';
+import logger from '@/utils/logger';
 
-import format from '@/decorators/response';
-import { HttpError, CustomError } from '@/decorators/customError';
+import format from '@/api/decorators/response';
+import { HttpError, CustomError } from '@/api/decorators/customError';
 
 export default (ctx, next) => {
     return next().catch((err) => {

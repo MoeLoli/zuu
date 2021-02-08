@@ -2,8 +2,8 @@
  * @Author: Jin
  * @Date: 2020-10-02 18:00:33
  * @LastEditors: Jin
- * @LastEditTime: 2020-10-03 00:19:59
- * @FilePath: /zuu/src/loaders/schedule.js
+ * @LastEditTime: 2021-02-07 22:31:56
+ * @FilePath: /api/src/services/schedule.js
  */
 import schedule from 'node-schedule';
 

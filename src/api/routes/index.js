@@ -2,17 +2,17 @@
  * @Author: Jin
  * @Date: 2020-09-24 08:29:59
  * @LastEditors: Jin
- * @LastEditTime: 2020-10-20 13:03:01
- * @FilePath: /zuu/src/api/routes/index.js
+ * @LastEditTime: 2021-02-07 22:35:15
+ * @FilePath: /api/src/api/routes/index.js
  */
 import Router from "@koa/router";
 
-import { trigger } from "@/loaders/hook";
-import { getCPUUsage, parsePrefix } from "@/utils";
+import getCPUUsage from "@/utils/os";
+import { trigger } from "@/utils/hook";
+import parsePrefix from '@/utils/parsePrefix';
 
 const router = new Router({
-    prefix:
-        parsePrefix(__filename) === "/" ? undefined : parsePrefix(__filename),
+    prefix: parsePrefix(__filename) === "/" ? undefined : parsePrefix(__filename),
 });
 
 router.get("/System", async (ctx, next) => {

@@ -2,7 +2,7 @@
  * @Author: Jin
  * @Date: 2020-09-24 14:20:23
  * @LastEditors: Jin
- * @LastEditTime: 2020-11-04 19:16:19
+ * @LastEditTime: 2020-11-05 10:41:38
  * @FilePath: /zuu/src/plugins/hitokoto/plugin.js
  */
 import _ from "lodash";
@@ -10,6 +10,10 @@ import _ from "lodash";
 const hitokotoData = require("./hitokoto.json");
 
 class Hitokoto {
+    install () {
+
+    }
+
     activate() {
         this.hook.register("REGISTER_ROUTE_2", [this, this.regRoute]);
         this.hook.register("REGISTER_TELEGRAM_BOT_1", [

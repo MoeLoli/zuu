@@ -2,8 +2,8 @@
  * @Author: Jin
  * @Date: 2020-09-24 09:16:43
  * @LastEditors: Jin
- * @LastEditTime: 2020-11-04 19:02:47
- * @FilePath: /zuu/src/loaders/koa2.js
+ * @LastEditTime: 2021-02-07 22:27:12
+ * @FilePath: /api/src/loaders/koa2.js
  */
 import fs from 'fs';
 import util from 'util';
@@ -12,12 +12,12 @@ import json from 'koa-json';
 import koaBody from 'koa-body';
 import KoaRouter from '@koa/router';
 
-import logger from './logger';
 import { zuu } from '@/global';
-import { trigger } from './hook';
+import logger from '../utils/logger';
+import { trigger } from '../utils/hook';
 
-import constants from '@/decorators/constants';
-import { HttpError } from '@/decorators/customError';
+import constants from '@/api/decorators/constants';
+import { HttpError } from '@/api/decorators/customError';
 
 import middlewares from '@/api/middlewares';
 
@@ -73,15 +73,12 @@ export default async ({ app }) => {
 
     // router
     let routeNum = 0;
-
     const regRouter = (method, ...args) => {
         if (!method || args.length === 0) return
-
         routeNum++;
         const router = new KoaRouter();
         router[method].apply(router, args);
         app.use(router.routes()).use(router.allowedMethods());
-
         routeList.push({
             name: ((args[0].split('/').filter(e => e != ''))[0]).toLocaleLowerCase(),
             args
@@ -89,7 +86,6 @@ export default async ({ app }) => {
     }
 
     trigger('REGISTER_ROUTE_1', [ regRouter ]);
-
     trigger('REGISTER_MIDDLEWARE_4', [ loadMiddleware ]);
 
     let routes = await getRoutes(path.join(__dirname, '../api/routes'));

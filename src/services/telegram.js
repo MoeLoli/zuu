@@ -2,18 +2,18 @@
  * @Author: Jin
  * @Date: 2020-09-26 22:36:56
  * @LastEditors: Jin
- * @LastEditTime: 2020-10-21 14:46:11
- * @FilePath: /zuu/src/loaders/telegram.js
+ * @LastEditTime: 2021-02-07 22:30:45
+ * @FilePath: /api/src/services/telegram.js
  */
 import { Telegraf } from "telegraf";
 import HttpsProxyAgent from "https-proxy-agent";
 
 import config from "@/config";
-import { trigger } from "./hook";
-import logger from "./logger";
+import logger from "../utils/logger";
+import { trigger } from "../utils/hook";
 
 export default () => {
-    if (!config?.telegram?.token) return;
+    if (!config?.telegram?.enabled || !config?.telegram?.token)  return;
 
     const botConfig = {};
     if (config.http_proxy) {

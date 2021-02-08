@@ -2,7 +2,7 @@
  * @Author: Jin
  * @Date: 2020-09-24 14:20:23
  * @LastEditors: Jin
- * @LastEditTime: 2020-11-04 19:16:11
+ * @LastEditTime: 2020-11-05 10:44:44
  * @FilePath: /zuu/src/plugins/statistics/plugin.js
  */
 import fs from 'fs';
@@ -11,9 +11,15 @@ import path from 'path';
 const statisticsData = require("./statistics.json");
 
 class Statistics {
+    install() {}
+
+    uninstall() {}
+
     activate() {
         this.hook.register("REGISTER_MIDDLEWARE_2", [this, this.regMiddleware]);
     }
+
+    deactivate() {}
 
     async regMiddleware(fn) {
         fn(async (ctx, next) => {

@@ -1,12 +1,11 @@
 /*
  * @Author: Jin
- * @Date: 2020-09-27 14:13:45
+ * @Date: 2021-02-07 00:37:45
  * @LastEditors: Jin
- * @LastEditTime: 2020-10-02 10:49:04
- * @FilePath: /zuu/src/utils.js
+ * @LastEditTime: 2021-02-07 22:23:58
+ * @FilePath: /api/src/utils/os.js
  */
 import os from 'os';
-import path from 'path';
 
 const OSUtils = {
     cpuUsageMSDefault: 1000,
@@ -51,21 +50,8 @@ const OSUtils = {
     }
 }
 
-export const parsePrefix = (filename = __filename) => {
-    const pathParse = path.parse(filename);
-    const filePath = (pathParse.dir).substr((pathParse.dir).indexOf('/routes') + 7, (pathParse.dir).length) || '/';
-    const fileName = pathParse.name;
-    let ret;
-
-    if (fileName.toLocaleLowerCase() === 'index') {
-        ret = filePath;
-    } else {
-        ret = `${filePath}/${fileName}`;
-    }
-
-    return ret;
-}
-
 export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 export const getCPUUsage = async () => await OSUtils.getCPUUsage();
+
+export default getCPUUsage;

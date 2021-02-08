@@ -2,8 +2,8 @@
  * @Author: Jin
  * @Date: 2020-09-24 07:23:56
  * @LastEditors: Jin
- * @LastEditTime: 2020-10-21 14:44:00
- * @FilePath: /zuu/src/config/index.js
+ * @LastEditTime: 2021-02-07 00:47:46
+ * @FilePath: /api/src/config/index.js
  */
 import fs from "fs";
 import path from "path";
@@ -43,7 +43,9 @@ loadEnv();
 export default {
     port: parseInt(process.env.PORT, 10) || 3000,
     telegram: {
-        token: process.env.TELEGRAM_TOKEN,
+        enabled: process.env.TELEGRAM_BOT_ENABLED === 'true' || false,
+        token: process.env.TELEGRAM_BOT_TOKEN,
+        master: process.env.TELEGRAM_MASTER
     },
     http_proxy: process.env.HTTP_PROXY,
 };

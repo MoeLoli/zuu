@@ -8,12 +8,10 @@
 import fs from 'fs';
 import path from 'path';
 
-import { zuu } from '@/global';
-
-const utils = {}
+const utils = {};
 let files = fs.readdirSync(path.join(__dirname, './'));
-files = files.filter(f => (f != 'index.js' && f.endsWith('.js')), files);
-for (let name of files) {
+files = files.filter(f => (f !== 'index.js' && f.endsWith('.js')), files);
+for (const name of files) {
     utils[name.replace(/(\.\/|\.js)/g, '')] = require(__dirname + '/' + name).default;
 }
 

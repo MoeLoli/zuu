@@ -1,3 +1,4 @@
+/* eslint-disable prefer-spread */
 /*
  * @Author: Jin
  * @Date: 2020-09-24 09:16:43
@@ -12,23 +13,22 @@ import json from 'koa-json';
 import koaBody from 'koa-body';
 import KoaRouter from '@koa/router';
 
-import { zuu } from '@/global';
+import { zuu } from '@/core/global';
 import logger from '../utils/logger';
 import { trigger } from '../utils/hook';
 
-import constants from '@/api/decorators/constants';
-import { HttpError } from '@/api/decorators/customError';
+import constants from '@/core/api/decorators/constants';
+import { HttpError } from '@/core/api/decorators/customError';
 
-import middlewares from '@/api/middlewares';
+import middlewares from '@/core/api/middlewares';
 
 const getRoutes = async (filePath) => {
-    let fileList = [];
-    fileDisplay(filePath);
+    const fileList = [];
 
     function fileDisplay(filePath) {
-        let files = fs.readdirSync(filePath);
-        for (let file in files) {
-            let filedir = path.join(filePath, files[file]);
+        const files = fs.readdirSync(filePath);
+        for (let i = 0; i < files.length; i++) {
+            const filedir = path.join(filePath, files[i]);
             const stats = fs.statSync(filedir);
             if (stats.isFile()) {
                 if (filedir.indexOf('.DS_Store') === -1) {
@@ -40,15 +40,18 @@ const getRoutes = async (filePath) => {
             }
         }
     }
+
+    fileDisplay(filePath);
+
     return fileList;
-}
+};
 
 const routeList = zuu.routes = zuu.routes ? zuu.routes : [];
 
 export default async ({ app }) => {
     const loadMiddleware = (...args) => {
         app.use.apply(app, args);
-    }
+    };
 
     trigger('REGISTER_MIDDLEWARE_1', [ loadMiddleware ]);
 
@@ -74,16 +77,16 @@ export default async ({ app }) => {
     // router
     let routeNum = 0;
     const regRouter = (method, ...args) => {
-        if (!method || args.length === 0) return
+        if (!method || args.length === 0) {return;}
         routeNum++;
         const router = new KoaRouter();
         router[method].apply(router, args);
         app.use(router.routes()).use(router.allowedMethods());
         routeList.push({
-            name: ((args[0].split('/').filter(e => e != ''))[0]).toLocaleLowerCase(),
+            name: ((args[0].split('/').filter(e => e !== ''))[0]).toLocaleLowerCase(),
             args
-        })
-    }
+        });
+    };
 
     trigger('REGISTER_ROUTE_1', [ regRouter ]);
     trigger('REGISTER_MIDDLEWARE_4', [ loadMiddleware ]);
@@ -113,7 +116,7 @@ export default async ({ app }) => {
 
     trigger('REGISTER_MIDDLEWARE_5', [ loadMiddleware ]);
 
-    logger.info(util.format(`%d ${routeNum.length == 1 ? 'route' : 'routes'} have been loaded`, routeNum), 'SYSTEM');
+    logger.info(util.format(`%d ${routeNum.length === 1 ? 'route' : 'routes'} have been loaded`, routeNum), 'SYSTEM');
 
     app.use(async () => {
         throw new HttpError(constants.HTTP_CODE.NOT_FOUND);

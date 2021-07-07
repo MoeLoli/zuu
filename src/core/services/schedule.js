@@ -7,10 +7,10 @@
  */
 import schedule from 'node-schedule';
 
-import { zuu } from '@/global';
+import { zuu } from '@/core/global';
 
 const schedules = zuu.schedules = zuu.schedules ? zuu.schedules: {};
 
 export default (name, date, handle) => {
-    schedules[name] = schedule.scheduleJob(date, handle)
+    schedules[name] = schedule.scheduleJob(date, handle);
 };

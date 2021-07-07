@@ -5,9 +5,9 @@
  * @LastEditTime: 2020-11-05 10:41:38
  * @FilePath: /zuu/src/plugins/hitokoto/plugin.js
  */
-import _ from "lodash";
+import _ from 'lodash';
 
-const hitokotoData = require("./hitokoto.json");
+const hitokotoData = require('./hitokoto.json');
 
 class Hitokoto {
     install () {
@@ -15,40 +15,40 @@ class Hitokoto {
     }
 
     activate() {
-        this.hook.register("REGISTER_ROUTE_2", [this, this.regRoute]);
-        this.hook.register("REGISTER_TELEGRAM_BOT_1", [
+        this.hook.register('REGISTER_ROUTE_2', [this, this.regRoute]);
+        this.hook.register('REGISTER_TELEGRAM_BOT_1', [
             this,
-            this.regTelegramBot,
+            this.regTelegramBot
         ]);
     }
 
     regTelegramBot(fn) {
-        fn("command", "/hitokoto", (ctx) => {
+        fn('command', '/hitokoto', (ctx) => {
             let hitokoto = _.chain(hitokotoData.hitokoto);
             hitokoto = hitokoto.sampleSize(1).value();
             ctx.reply(hitokoto[0].hitokoto, {
-                reply_to_message_id: ctx.message.message_id,
+                reply_to_message_id: ctx.message.message_id
             });
         });
     }
 
     regRoute(fn) {
-        fn("get", "/hitokoto/cat", (ctx) => {
+        fn('get', '/hitokoto/cat', (ctx) => {
             ctx.status = 200;
             ctx.body = {
-                status: "success",
-                data: hitokotoData.categories,
+                status: 'success',
+                data: hitokotoData.categories
             };
         });
 
-        fn("get", "/hitokoto", (ctx) => {
+        fn('get', '/hitokoto', (ctx) => {
             let hitokoto = _.chain(hitokotoData.hitokoto);
             hitokoto = hitokoto.sampleSize(1).value();
 
             ctx.status = 200;
             ctx.body = {
-                status: "success",
-                data: hitokoto,
+                status: 'success',
+                data: hitokoto
             };
         });
     }

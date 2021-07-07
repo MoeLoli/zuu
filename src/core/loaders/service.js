@@ -6,5 +6,5 @@
  * @FilePath: /api/src/loaders/service.js
  */
 export default ({ app }) => {
-    require('@/services').default({ koa2App: app });
-}
+    require('@/core/services').default({ koa2App: app });
+};

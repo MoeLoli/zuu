@@ -10,16 +10,16 @@ const headers = {
     'Access-Control-Allow-Headers': 'Origin, Content-Type, Content-Length, Authorization, Accept, X-Requested-With, X-Auth-Token, yourHeaderFeild',
     'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
     'Content-Type': 'application/json; charset=UTF-8',
-    'Cache-Control': 'no-cache',
+    'Cache-Control': 'no-cache'
 };
 
 export default async (ctx, next) => {
     ctx.set(headers);
 
-    if (ctx.method == 'OPTIONS') {
+    if (ctx.method === 'OPTIONS') {
         ctx.body = '';
         ctx.status = 204;
     } else {
         await next();
     }
-}
+};

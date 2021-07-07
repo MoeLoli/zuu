@@ -7,6 +7,8 @@
  */
 import os from 'os';
 
+export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 const OSUtils = {
     cpuUsageMSDefault: 1000,
     async getCPUUsage(options = {}) {
@@ -22,7 +24,7 @@ const OSUtils = {
         const total = t2.total - t1.total;
         let usage = 1 - idle / total;
 
-        if (percentage) usage = (usage * 100.0).toFixed(2) + "%";
+        if (percentage) {usage = (usage * 100.0).toFixed(2) + '%';}
 
         return usage;
     },
@@ -30,8 +32,8 @@ const OSUtils = {
         const cpus = os.cpus();
         let user = 0, nice = 0, sys = 0, idle = 0, irq = 0, total = 0;
 
-        for (let cpu in cpus) {
-            const times = cpus[cpu].times;
+        for (let i = 0; i <= cpus.length; i++) {
+            const times = cpus[i].times;
             user += times.user;
             nice += times.nice;
             sys += times.sys;
@@ -45,12 +47,10 @@ const OSUtils = {
             user,
             sys,
             idle,
-            total,
-        }
+            total
+        };
     }
-}
-
-export const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+};
 
 export const getCPUUsage = async () => await OSUtils.getCPUUsage();
 

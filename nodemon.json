@@ -9,5 +9,5 @@
         "node_modules/**/node_modules"
     ],
     "ext": "js, ts, json",
-    "exec": "node dev-server.js"
+    "exec": "node src/app.js"
 }

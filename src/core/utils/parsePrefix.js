@@ -20,4 +20,4 @@ export default (filename = __filename) => {
     }
 
     return ret;
-}
+};

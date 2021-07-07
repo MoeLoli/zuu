@@ -8,6 +8,7 @@
 import koa2Loader from './koa2';
 import pluginLoader from './plugin';
 import serviceLoader from './service';
+
 export default async ({ koa2App }) => {
     await pluginLoader({ app: koa2App });
 

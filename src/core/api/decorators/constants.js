@@ -3,7 +3,8 @@
  * @Date: 2018-06-21 15:19:06
  * @LastEditors: Jin
  * @LastEditTime: 2020-09-24 13:09:54
- * @FilePath: /Server/src/decorators/constants.js
+ * @FilePath: /Server/src/decorators/
+ * .js
  */
 module.exports = Object.freeze({
     HTTP_CODE: {

@@ -19,6 +19,6 @@ export default async (ctx, next) => {
         await next();
     } else {
         ctx.status = 401;
-        msg = 'Authentication Error';
+        ctx.msg = 'Authentication Error';
     }
 };

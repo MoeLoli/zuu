@@ -8,12 +8,12 @@
 import fs from 'fs';
 import path from 'path';
 
-const middlewares = {}
+const middlewares = {};
 
 let files = fs.readdirSync(path.join(__dirname, './'));
-files = files.filter(f => (f != 'index.js' && f.endsWith('.js')), files);
+files = files.filter(f => (f !== 'index.js' && f.endsWith('.js')), files);
 
-for (let name of files) {
+for (const name of files) {
     middlewares[name.replace(/(\.\/|\.js)/g, '')] = require(__dirname + '/' + name).default;
 }
 
